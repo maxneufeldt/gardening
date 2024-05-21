@@ -1,0 +1,100 @@
+import { useEffect, useState } from "react";
+//import { render } from "react-dom";
+//import reactLogo from "./assets/react.svg";
+//import viteLogo from "/vite.svg";
+import "./App.css";
+//import React {}
+
+// Most basic version:
+// Button that when clicked begins timer
+// As timer grows plant grows.
+//
+// Next: Add grid, multiple plants.
+// Then store plant growth history.
+
+// Make rare plants that are random variants
+// Make fidgeting or moving cursor prevent them
+
+// If use silly counters for disabling buttons or starting timer
+// Perhaps use counters for secret stats like excess
+
+// Start timer at null,
+// Make button work only if timer = null
+
+// Logic:
+// Start counter at null & display settime if null
+
+function App() {
+  const [counter, setCounter] = useState(-1); // trying -1 instead of null
+  const [pause, setPause] = useState(false);
+
+  function pauseHandler() {
+    setPause(!pause);
+  }
+
+  useEffect(() => {
+    let timer = setInterval(() => {
+      if (counter > 0) {
+        setCounter(counter - 1);
+      }
+
+      //counter > 0 && pause != true && setCounter(counter - 1);
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [pause]); //works without pausing if set to [counter]
+
+  function StartButton() {
+    function handleClick() {
+      counter === -1 && setCounter(60);
+      //pause === true && setPause(false);
+      //pause === false && setPause(true);
+    }
+
+    return (
+      <button onClick={handleClick}>
+        {counter != -1 ? "Started" : "Start Timer"}
+      </button>
+    );
+  }
+
+  function PauseButton() {
+    //function handleClick() {
+    //  setPause(!pause/);
+    //}
+
+    return (
+      <button onClick={() => pauseHandler()}>
+        {pause === false ? "Pause" : "Resume"}
+      </button>
+    );
+  }
+
+  return (
+    <div className="App">
+      <div>
+        <h1>Time remaining:</h1>
+        <div>
+          <h1>{counter != -1 ? counter : 60}</h1>
+        </div>
+        <div>
+          <StartButton />
+        </div>
+        <div>
+          <PauseButton />
+        </div>
+
+        <br />
+        <div>Pause Status:</div>
+        <div>{pause === false ? "false" : "true"}</div>
+        <div>True counter value:</div>
+        <div>{counter}</div>
+      </div>
+    </div>
+  );
+}
+
+// If {counter} is null,
+
+//null ? null : number
+
+export default App;
